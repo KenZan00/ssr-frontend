@@ -1,12 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import TestView from "./views/TestView.tsx";
-import AppForm from "./components/form.tsx";
+// import TestView from "./views/TestView.tsx";
+import AppFormView from "./views/AppFormView.tsx";
+import DocumentsListView from "./views/DocumentsListView.tsx";
 
 export default function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<TestView />} />
-      <Route path="/form" element={<AppForm />} />
+      <Route path="/" element={<DocumentsListView />} />
+      <Route path="/:id" element={<AppFormView />} />
     </Routes>
   );
 }
