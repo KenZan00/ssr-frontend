@@ -18,7 +18,7 @@ export default function AppForm({ onSubmit, currentDoc, }: {
     }
 
     return (
-        <form onSubmit={submitHandling}>
+        <form onSubmit={submitHandling} className="new-doc">
             <label htmlFor="title">Titel: </label>
             <input id="title"name="title" type="text" placeholder="Title goes here" defaultValue={currentDoc?.title || ""} />
 
