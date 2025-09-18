@@ -1,5 +1,7 @@
 @use './styles/helpers/variables' as *;
+@use './styles/base/base';
 @use './styles/base/typography';
-@use './styles/vite.scss';
+@use './styles/base/inputs';
 
 @import 'normalize.css';
+@import './styles/base/fonts';
