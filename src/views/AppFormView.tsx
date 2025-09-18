@@ -6,5 +6,8 @@ export default function AppFormView() {
     const { id } = useParams();
     const doc = testData.find((documentId) => documentId.id === id);
 
-    return <AppForm currentDoc={doc} />;
+    return <div className="app-form">
+                <h2>Dokument</h2>
+                <AppForm currentDoc={doc} />
+            </div>
 }
