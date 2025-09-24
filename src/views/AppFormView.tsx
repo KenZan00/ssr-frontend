@@ -1,13 +1,14 @@
-import { useParams } from "react-router-dom";
-import { testData } from "../data/testData";
+import { useLocation } from "react-router-dom";
 import AppForm from "../components/Form";
 
 export default function AppFormView() {
-    const { id } = useParams();
-    const doc = testData.find((documentId) => documentId.id === id);
+    const { state } = useLocation();
+    const doc = state?.doc;
 
     return <div className="app-form">
                 <h2>Dokument</h2>
-                <AppForm currentDoc={doc} />
+                <AppForm
+                    currentDoc={doc && { id: doc._id, title: doc.title, content: doc.content }}
+                />
             </div>
 }
