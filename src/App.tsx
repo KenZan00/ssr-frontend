@@ -1,14 +1,14 @@
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./Router";
 import Layout from "./layout/layout"
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter basename="/ssr-frontend">
       <Layout>
         <AppRouter />
       </Layout>
-    </Router>
+    </BrowserRouter>
   );
 }
 
