@@ -10,7 +10,7 @@ export default function Layout({children}: prop) {
     return (
         <div className="layout-container">
             <Header />
-            <main>{children}</main>
+                <main className='main' id="main">{children}</main>
             <Footer />
         </div>
     )
