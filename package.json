@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://KenZan00.github.io/ssr-frontend",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
