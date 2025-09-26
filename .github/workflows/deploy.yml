@@ -27,6 +27,9 @@ jobs:
       run: cp dist/index.html dist/404.html
     - name: Run Cypress tests
       uses: cypress-io/github-action@v6
+      with:
+        start: npm run preview
+        wait-on: http://localhost:5173
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
