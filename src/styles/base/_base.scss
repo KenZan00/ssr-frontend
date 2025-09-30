@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#root {
+    height: 100%;
+}
+
+html {
+    font-size: 100%;
+    height: 100%;
+}
+
+body {
+    line-height: 1.4;
+    font-family: "Noto Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+header {
+    background-color: #0074D9;
+    color: #fff;
+    padding: 1.4rem 3rem;
+}
+
+main {
+    width: 96%;
+    max-width: 64rem;
+    margin: 1.4rem auto;
+    flex: 1 0 auto;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1.4rem 8rem;
+    flex-shrink: 0;
+}
+
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+.new-doc button {
+    margin-bottom: 1.4rem;
+    font-size: 1rem;
+    padding: 1.4rem;
+}

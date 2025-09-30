@@ -1,0 +1,37 @@
+name: Deploy ssr-editor to GitHub Pages
+
+on:
+  push:
+    branches: ["main", "refactoring"]
+  pull_request:
+    branches: ["main", "refactoring"]
+permissions:
+  contents: write
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22
+    - name: Install dependencies
+      run: npm install
+    - name: Run ESLint
+      run: npm run lint
+    - name: Build project
+      run: npm run build
+    - name: Copy index.html to 404.html
+      run: cp dist/index.html dist/404.html
+    - name: Run Cypress tests
+      uses: cypress-io/github-action@v6
+      with:
+        start: npm run preview
+        wait-on: http://localhost:5173
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: dist

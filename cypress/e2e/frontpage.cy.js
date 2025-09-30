@@ -1,0 +1,26 @@
+/// <reference types="cypress" />
+
+// Welcome to Cypress!
+//
+// This spec file contains a variety of sample tests
+// for a todo list app that are designed to demonstrate
+// the power of writing tests in Cypress.
+//
+// To learn more about how Cypress works and
+// what makes it such an awesome testing tool,
+// please read our getting started guide:
+// https://on.cypress.io/introduction-to-cypress
+
+describe('example to-do app', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:5173/')
+  })
+
+  it('displays header', () => {
+    cy.get('.ssr-header').should('exist').and('have.text', 'SSR Editor')
+    cy.get('h2').should('have.text', 'Dokument')
+    cy.get(':nth-child(1) > a').should('exist').and('have.attr', 'href')
+    cy.get('.ssr-footer').should('exist')
+    cy.get('.copyright').should('exist')
+  })
+})
