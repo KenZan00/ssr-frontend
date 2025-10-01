@@ -1,5 +1,12 @@
 import { Link } from "react-router-dom";
 import documents from "../models/documents.ts";
+import socket from "../utils/socketio.js"
+
+socket.on('FromBackend', data => {
+    console.log(data)
+    //After frombackend
+    socket.emit('FromFrontend', "Hi, this is frontend speaking")
+})
 
 const docs = await documents.getAllDocuments();
 
