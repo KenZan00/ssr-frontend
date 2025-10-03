@@ -18,18 +18,19 @@ export default function AppForm({ currentDoc, }: {
         useEffect(() => {
             socket.current = io(SERVER_URL);
 
-            socket.current.on("title", (data) => {
-                setTitle(data);
-            });
-            
-            socket.current.on("content", (data) => {
-                setContent(data);
+            if(currentDoc?.id) {
+                socket.current.emit('create', currentDoc.id)
+            }
+
+            socket.current.on('doc', (data) => {
+                setTitle(data.title);
+                setContent(data.content)
             });
 
             return () => {
                 socket.current.disconnect();
             }
-        }, []);
+        }, [currentDoc?.id]);
 
         useEffect(() => {
             setTitle(currentDoc?.title || "");
@@ -39,12 +40,24 @@ export default function AppForm({ currentDoc, }: {
 
         function handleContentChange(e) {
             const value = e.target.value;
-            socket.current.emit("content", value);
-        }
+            //Set content due rooms broadcat on server and not emits to all.
+            setContent(value)
 
-        function handleTitleChange(e) {
+            socket.current.emit("doc", {
+                _id: currentDoc.id,
+                title,
+                content: value
+            });
+        }
+        function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>) {
             const value = e.target.value;
-            socket.current.emit("title", value);
+            setTitle(value);
+
+            socket.current.emit("doc", {
+                _id: currentDoc.id,
+                title: value,
+                content
+            });
         }
 
         const submitHandling = async (event: React.FormEvent<HTMLFormElement>) => {
