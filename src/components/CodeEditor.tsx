@@ -5,6 +5,6 @@ import documents from "../models/documents.ts";
 
 export default function CodeMode({ currentDoc }) {
     return (
-        <>Hej! Detta kommer direkt från codeMode-komponenten</>
+        <Editor height="90vh" defaultLanguage="javascript" defaultValue="// some comment" />
     )
 }
