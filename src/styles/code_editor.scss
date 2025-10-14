@@ -1,0 +1,12 @@
+.code-editor-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+}
+
+.code-editor-container {
+    flex: 1;
+    border: 2px solid grey;
+    border-radius: 5px;
+}
