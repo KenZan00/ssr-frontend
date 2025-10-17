@@ -10,6 +10,7 @@ export default function CodeMode({ currentDoc, }: {
     }) {
     
         const [editorContent, setEditorContent] = useState('')
+        const [codeOutput, setCodeOutput] = useState('Here comes the output from code runs')
 
         const socket = useRef(null);
 
@@ -42,7 +43,17 @@ export default function CodeMode({ currentDoc, }: {
             });
         }
 
+        function runCode() {
+            const result = 'Api-call return result from model is here for me :)'
+            setCodeOutput(result)
+            console.log('Code successfully sent into space somewhere')
+        }
+
         return (
+        <>
+        <div>
+            <button onClick={runCode}>Run Code</button>
+        </div>
         <div className="monaco-container">
             <div className="monaco-editor-box">
                 <Editor
@@ -60,8 +71,9 @@ export default function CodeMode({ currentDoc, }: {
                 />
             </div>
             <div className="monaco-output-box">
-                <pre>Här kommer resultatet från api-svar att synas</pre>
+                <pre>{codeOutput}</pre>
             </div>
         </div>
+        </>
     )
 }
