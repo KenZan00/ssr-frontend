@@ -5,9 +5,7 @@ import Layout from "./layout/layout"
 function App() {
   return (
     <BrowserRouter basename="/ssr-frontend">
-      <Layout>
         <AppRouter />
-      </Layout>
     </BrowserRouter>
   );
 }
