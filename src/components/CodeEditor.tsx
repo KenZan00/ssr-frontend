@@ -43,18 +43,25 @@ export default function CodeMode({ currentDoc, }: {
         }
 
         return (
-        <Editor
-        className="code-editor"
-        height="90vh"
-        width="100%"
-        theme="vs-dark"
-        defaultLanguage="javascript"
-        defaultValue="// some comment"
-        value={editorContent}
-        onChange={handleEditorChange}
-        options={{
-            fontSize: 20,
-        }}
-        />
+        <div className="monaco-container">
+            <div className="monaco-editor-box">
+                <Editor
+                className="code-editor"
+                height="75vh"
+                width="100%"
+                theme="vs-dark"
+                defaultLanguage="javascript"
+                defaultValue="// some comment"
+                value={editorContent}
+                onChange={handleEditorChange}
+                options={{
+                    fontSize: 20,
+                }}
+                />
+            </div>
+            <div className="monaco-output-box">
+                <pre>Här kommer resultatet från api-svar att synas</pre>
+            </div>
+        </div>
     )
 }

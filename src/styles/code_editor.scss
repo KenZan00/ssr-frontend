@@ -7,8 +7,26 @@
 
 .code-editor-container {
     flex: 1;
-    height: 90vh;
+    // height: 90vh;
     width: 100%;
     border: 2px solid grey;
     border-radius: 5px;
+}
+
+.monaco-container {
+    display: flex;
+}
+
+.monaco-editor-box {
+    flex: 1;
+}
+
+.monaco-output-box {
+    flex: 1;
+    // text-align: center;
+}
+
+.monaco-output-box pre {
+    width: 100%;
+    text-align: center;
 }
