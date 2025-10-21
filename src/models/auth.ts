@@ -41,6 +41,19 @@ const auth = {
         console.log("Result of logout:", token);
         return token;
     },
+    token: async function token() {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${baseURL}/auth/token`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+
+        const result = await response.json();
+        console.log("Auth token:", result.data);
+        return result.data;
+    },
 }
 
 export default auth
