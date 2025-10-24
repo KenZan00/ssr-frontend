@@ -38,7 +38,8 @@ const auth = {
         const token = localStorage.getItem("token");
         console.log("Before logout:", token);
         localStorage.removeItem("token");
-        console.log("Result of logout:", token);
+        const token2 = localStorage.getItem("token");
+        console.log("Result of logout:", token2);
         return token;
     },
     token: async function token() {
