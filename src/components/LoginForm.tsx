@@ -15,21 +15,21 @@ export default function LoginForm() {
         const password = formData.get('password') as string;
         // const action = submitter?.value as string;
 
-            const loginResult = await auth.login({ email, password });
-            if (loginResult?.data?.type === 'success') {
-                navigate("/");
-            }
-            if (loginResult?.errors?.[0]?.status === 401) {
-                alert(loginResult.errors[0].detail);
-            }
+        const loginResult = await auth.login({ email, password });
+        if (loginResult?.data?.type === 'success') {
+            navigate("/");
         }
+        if (loginResult?.errors?.[0]?.status === 401) {
+            alert(loginResult.errors[0].detail);
+        }
+    }
 
-        // try {
-        //     console.log("Login complete:", loginResult);
-        //     navigate("/");
-        // } catch (error) {
-        //     console.log("Failed to login:", error);
-        // }
+    // try {
+    //     console.log("Login complete:", loginResult);
+    //     navigate("/");
+    // } catch (error) {
+    //     console.log("Failed to login:", error);
+    // }
 
 
     return (

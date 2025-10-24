@@ -1,7 +1,9 @@
 import type React from "react";
 import auth from "../models/auth.ts";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupForm() {
+    const navigate = useNavigate();
     const submitHandling = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -15,6 +17,12 @@ export default function SignupForm() {
         try {
             const signupResult = await auth.signup({ email, password });
             console.log("Signup complete:", signupResult);
+            if (signupResult?.data?.type === 'success') {
+                navigate("/");
+            }
+            if (signupResult?.errors?.[0]?.status === 401) {
+                alert(signupResult.errors[0].detail);
+            }
         } catch (error) {
             console.log("Failed to signup:", error);
         }
