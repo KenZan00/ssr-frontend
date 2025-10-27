@@ -22,7 +22,7 @@ const documents = {
         return result.data;
     },
     postDocument: async function postDocument(data: 
-        { title: string; content: string; }) {
+        { title: string; content: string; type: string}) {
         // const token = localStorage.getItem("token");
         // // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGxlQGdtYWlsLmNvbSIsImlhdCI6MTc1OTI2NTI0NywiZXhwIjoxNzU5ODcwMDQ3fQ.v6PSdOVAI2D4iCXNsrNv_ltRS5MrN2GIJEgrVmMl4Ak"
 
