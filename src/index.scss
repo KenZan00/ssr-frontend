@@ -2,6 +2,8 @@
 @use './styles/base/base';
 @use './styles/base/typography';
 @use './styles/base/inputs';
+@use './styles/components/EmailMenuForm';
+
 
 @import 'normalize.css';
 @import './styles/base/fonts';
