@@ -51,7 +51,7 @@ export default function AppForm({ currentDoc, }: {
         setContent(value)
 
         socket.current.emit("doc", {
-            _id: currentDoc.id,
+            _id: currentDoc.id || "",
             title,
             content: value
         });
@@ -62,7 +62,7 @@ export default function AppForm({ currentDoc, }: {
         setTitle(value);
 
         socket.current.emit("doc", {
-            _id: currentDoc.id,
+            _id: currentDoc.id || "",
             title: value,
             content
         });

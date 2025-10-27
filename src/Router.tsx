@@ -12,6 +12,7 @@ export default function AppRouter() {
     <Routes>
       <Route element={<Protected />}>
         <Route path="/" element={<DocumentsListView />} />
+        <Route path="/newdoc" element={<AppFormView />} />
         <Route path="/:id" element={<AppFormView />} />
       </Route>
       <Route path="/login" element={<LoginFormView />} />
