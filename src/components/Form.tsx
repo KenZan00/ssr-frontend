@@ -82,8 +82,9 @@ export default function AppForm({ currentDoc, }: {
         if (action === 'Lägg till') {
                 id = '';
             }
-
-        const inputs = { title, content, action, id };
+        
+        const type = "text"
+        const inputs = { title, content, action, id, type };
 
         if (action === 'Lägg till') {
             try {
