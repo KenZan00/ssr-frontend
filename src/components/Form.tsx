@@ -1,8 +1,11 @@
 import type React from "react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import documents from "../models/documents.ts";
 import EmailMenuForm from "./EmailMenuForm.tsx"
+import { io } from "socket.io-client";
+
+const SERVER_URL = "http://localhost:3000";
 
 export default function AppForm({ currentDoc, }: {
     currentDoc?: { id: string; title: string; content: string }
@@ -10,21 +13,88 @@ export default function AppForm({ currentDoc, }: {
     const [emailMenuVisible, setEmailMenuVisible] = useState(false);
     const [availableUserEmails, setAvailableUserEmails] = useState(['test']);
     const navigate = useNavigate();
+
+    //Socket states
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+
+    const socket = useRef(null);
+
+    //Useeffect handling socket creation and data handling
+    useEffect(() => {
+        socket.current = io(SERVER_URL);
+
+        if(currentDoc?.id) {
+            socket.current.emit('create', currentDoc.id)
+        }
+
+        socket.current.on('doc', (data) => {
+            setTitle(data.title);
+            setContent(data.content)
+        });
+
+        return () => {
+            socket.current.disconnect();
+        }
+    }, [currentDoc?.id]);
+
+    // Useeffect handling incoming title and content from prop 
+    useEffect(() => {
+        setTitle(currentDoc?.title || "");
+        setContent(currentDoc?.content || "");
+
+    }, [currentDoc?.id, currentDoc?.title, currentDoc?.content]);
+
+    function handleContentChange(e) {
+        const value = e.target.value;
+        //Set content due rooms broadcat on server and not emits to all.
+        setContent(value)
+
+        socket.current.emit("doc", {
+            _id: currentDoc.id,
+            title,
+            content: value
+        });
+    }
+
+    function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const value = e.target.value;
+        setTitle(value);
+
+        socket.current.emit("doc", {
+            _id: currentDoc.id,
+            title: value,
+            content
+        });
+    }
+
     const submitHandling = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
         const nativeEvent = event.nativeEvent as SubmitEvent;
         const submitter = nativeEvent.submitter as HTMLButtonElement | null;
         const formData = new FormData(event.currentTarget);
         const title = formData.get('title') as string;
         const content = formData.get('content') as string;
         const action = submitter?.value as string;
-        const id = currentDoc?.id as string;
+        let id = formData.get('id') as string;
+        
+        if (action === 'Lägg till') {
+                id = '';
+            }
+
+        const inputs = { title, content, action, id };
 
         if (action === 'Lägg till') {
             try {
-                const newDoc = await documents.postDocument({ title, content });
+                const savedDoc = await documents.postDocument(inputs);
+                console.log("Document saved:", savedDoc);
+                
                 navigate("/");
-                console.log("Document created:", newDoc);
+
+                //   onSubmit?.({ title, content });
+                //   console.log( title, content );
+
             } catch (error) {
                 console.log("Failed to save document:", error);
             }
@@ -57,10 +127,23 @@ export default function AppForm({ currentDoc, }: {
         <div>
             <form onSubmit={submitHandling} className="new-doc">
                 <label htmlFor="title">Titel: </label>
-                <input id="title" name="title" type="text" placeholder="Title goes here" defaultValue={currentDoc?.title || ""} />
+                <input 
+                    id="title"
+                    name="title"
+                    type="text"
+                    placeholder="Title goes here"
+                    value={title}
+                    onChange={handleTitleChange}
+                />
 
                 <label htmlFor="content">Innehåll: </label>
-                <textarea id="content" name="content" placeholder="Content goes here" defaultValue={currentDoc?.content || ""} />
+                <textarea
+                    id="content"
+                    name="content"
+                    placeholder="Content goes here"
+                    value={content}
+                    onChange={handleContentChange}
+                />
 
                 <button type="submit" name="action" value="Lägg till">Lägg till</button>
                 <button type="submit" name="action" value="Uppdatera">Uppdatera</button>
