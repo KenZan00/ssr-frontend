@@ -6,6 +6,7 @@ import DocumentsListView from "./views/DocumentsListView.tsx";
 import LoginFormView from "./views/LoginFormView.tsx";
 import SignupFormView from "./views/SignupFormView.tsx";
 import LogoutView from "./views/LogoutView.tsx";
+import CodeModeView from "./views/CodeModeView.tsx";
 
 export default function AppRouter() {
   return (
@@ -18,6 +19,8 @@ export default function AppRouter() {
       <Route path="/login" element={<LoginFormView />} />
       <Route path="/signup" element={<SignupFormView />} />
       <Route path="/logout" element={<LogoutView />} />
+      <Route path="/code" element={<CodeModeView />} />
+
     </Routes>
   );
 }
