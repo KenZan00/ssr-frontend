@@ -60,7 +60,7 @@ export default function CodeMode({ currentDoc, }: {
 
         async function saveCode() {
             const inputs = {
-                title: title || "Testtitel som bara fungerar en gång",
+                title: title || "No titel",
                 content: editorContent,
                 id: currentDoc?.id || "",
                 type: "code"
