@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 import Editor from "@monaco-editor/react";
 import documents from "../models/documents.ts";
+import executeJs from "../models/execjs.ts";
 
 const SERVER_URL = "http://localhost:3000";
 
@@ -49,8 +50,8 @@ export default function CodeMode({ currentDoc, }: {
             setTitle(value);
         }
 
-        function runCode() {
-            const result = 'Api-call return result from model is here for me :)'
+        async function runCode() {
+            const result = await executeJs.execCode(editorContent)
             setCodeOutput(result)
             console.log('Code successfully sent into space somewhere')
         }
