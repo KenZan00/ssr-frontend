@@ -20,7 +20,7 @@ export default function AppRouter() {
       <Route path="/signup" element={<SignupFormView />} />
       <Route path="/logout" element={<LogoutView />} />
       <Route path="/code" element={<CodeModeView />} />
-
+      <Route path="/code/:id" element={<CodeModeView />} />
     </Routes>
   );
 }
