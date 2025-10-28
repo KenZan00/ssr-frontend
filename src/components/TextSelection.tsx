@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 export default function TextSelection( { socket, currentDoc }: any) {
     const [selectedText, setSelectedText] = useState("")
     const [comment, setComment] = useState("")
-    // const textEditorRef = useRef<any>()
 
     function handleSelection() {
         const selection = window.getSelection()?.toString();
@@ -66,7 +65,6 @@ export default function TextSelection( { socket, currentDoc }: any) {
                 <textarea className="comments-textarea"
                     value={comment}
                     onChange={handleCommentChange}
-                    // ref={textEditorRef}
                     ></textarea>
                 <button onClick={handleCommentPost}>Comment</button>
             </div>
