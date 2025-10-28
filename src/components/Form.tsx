@@ -19,6 +19,7 @@ export default function AppForm({ currentDoc, }: {
     //Socket states
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [recieveComment, setRecieveComment] = useState([]);
 
     const socket = useRef(null);
 
@@ -34,6 +35,12 @@ export default function AppForm({ currentDoc, }: {
             setTitle(data.title);
             setContent(data.content)
         });
+
+        socket.current.on('comment', (data: any) => {
+            console.log("DATA FRÅN SOCKET COMMENT::::!!!!", data)
+            // const prev = [...prev, data];
+            setRecieveComment(prev => [...prev, data]);
+        })
 
         return () => {
             socket.current.disconnect();
@@ -156,9 +163,12 @@ export default function AppForm({ currentDoc, }: {
 
             {emailMenuVisible && <EmailMenuForm emails={availableUserEmails} />}
 
-        <div className="comments-box">
-            <TextSelection socket={socket.current} currentDoc={currentDoc} />
-        </div>
+            {socket.current && (
+                <div className="comments-box">
+                <TextSelection socket={socket.current} currentDoc={currentDoc} comments={recieveComment} />
+                </div>
+            )}
+
             
         </div>
 
