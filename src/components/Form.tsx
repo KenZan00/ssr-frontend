@@ -1,9 +1,11 @@
 import type React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 import documents from "../models/documents.ts";
 import EmailMenuForm from "./EmailMenuForm.tsx"
-import { io } from "socket.io-client";
+import TextSelection from "./TextSelection.tsx";
+
 
 const SERVER_URL = "http://localhost:3000";
 
@@ -126,6 +128,7 @@ export default function AppForm({ currentDoc, }: {
 
     return (
         <div>
+            <TextSelection />
             <form onSubmit={submitHandling} className="new-doc">
                 <label htmlFor="title">Titel: </label>
                 <input 
@@ -154,7 +157,5 @@ export default function AppForm({ currentDoc, }: {
 
             {emailMenuVisible && <EmailMenuForm emails={availableUserEmails} />}
         </div>
-
-
     )
 }
