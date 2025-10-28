@@ -128,7 +128,6 @@ export default function AppForm({ currentDoc, }: {
 
     return (
         <div>
-            <TextSelection />
             <form onSubmit={submitHandling} className="new-doc">
                 <label htmlFor="title">Titel: </label>
                 <input 
@@ -156,6 +155,13 @@ export default function AppForm({ currentDoc, }: {
             </form>
 
             {emailMenuVisible && <EmailMenuForm emails={availableUserEmails} />}
+
+        <div className="comments-box">
+            <TextSelection />
         </div>
+            
+        </div>
+
+
     )
 }
