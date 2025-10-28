@@ -14,6 +14,7 @@ export default function AppForm({ currentDoc, }: {
     const [availableUserEmails, setAvailableUserEmails] = useState(['']);
     const navigate = useNavigate();
 
+
     //Socket states
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -152,7 +153,8 @@ export default function AppForm({ currentDoc, }: {
                 <input type="hidden" name="id" value={currentDoc?.id || ""} />
             </form>
 
-            {emailMenuVisible && <EmailMenuForm emails={availableUserEmails} />}
+            {emailMenuVisible && <EmailMenuForm emails={availableUserEmails} 
+            id={currentDoc?.id || ''} title={title} />}
         </div>
 
 
