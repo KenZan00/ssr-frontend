@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function TextSelection() {
     const [selectedText, setSelectedText] = useState("")
+    const [comment, setComment] = useState("")
 
     useEffect(() => {
         function handleSelection() {
@@ -22,5 +23,26 @@ export default function TextSelection() {
             )
         }
     }, []);
-    return null;
+    
+    function handleCommentPost() {
+        console.log("Comment while pushing comment button:", comment)
+    }
+
+    function handleCommentChange(e) {
+        const value = e.target.value;
+        setComment(value)
+        console.log("The input from comment:", value)
+    }
+
+    return (
+        <div className="comments-container">
+            <div className="marked-text">
+                <textarea className="comments-textarea"
+                    value={comment}
+                    onChange={handleCommentChange}
+                    ></textarea>
+                <button onClick={handleCommentPost}>Comment</button>
+            </div>
+        </div>
+    );
 }
