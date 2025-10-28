@@ -1,31 +1,57 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-export default function TextSelection() {
+export default function TextSelection( { socket, currentDoc }: any) {
     const [selectedText, setSelectedText] = useState("")
     const [comment, setComment] = useState("")
+    // const textEditorRef = useRef<any>()
 
-    useEffect(() => {
-        function handleSelection() {
-            const selectedText = window.getSelection()?.toString();
-            setSelectedText(selectedText)
-            if (selectedText) {
-                console.log(selectedText)    
+    function handleSelection() {
+        const selection = window.getSelection()?.toString();
+        console.log("captured text", selection)
+        
+        if (selection) {
+            setSelectedText(selection);
             }
         }
 
-        document.addEventListener("selectionchange",
-            handleSelection
-        );
-
-        return () => {
-            document.removeEventListener("selectionchange",
-                handleSelection
-            )
-        }
+    useEffect(() => {
+        document.addEventListener("mouseup", handleSelection);
+        
+        return () => { 
+            document.removeEventListener("mouseup", handleSelection);
+            }
     }, []);
-    
+
+    function extractUser() {
+        const token = localStorage.getItem("token")
+
+        let username=""
+
+        if (!token) {
+            username = "incognito"
+            return username
+            } else {
+                const tokenDecoded = JSON.parse(atob(token.split(".")[1]));
+                const user = tokenDecoded.email;
+                console.log("Decoded token", tokenDecoded)
+                console.log("User", user)
+                return user
+            }
+        }
+
     function handleCommentPost() {
         console.log("Comment while pushing comment button:", comment)
+
+        const oneComment = {
+            user: extractUser(),
+            docId: currentDoc.id,
+            text: selectedText,
+            commentTxt: comment
+        }
+
+        console.log("Fully built socket emit object from user:", oneComment)
+
+        setComment("");
     }
 
     function handleCommentChange(e) {
@@ -40,6 +66,7 @@ export default function TextSelection() {
                 <textarea className="comments-textarea"
                     value={comment}
                     onChange={handleCommentChange}
+                    // ref={textEditorRef}
                     ></textarea>
                 <button onClick={handleCommentPost}>Comment</button>
             </div>
