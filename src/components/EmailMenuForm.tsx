@@ -1,16 +1,37 @@
 import type React from "react";
 import { useState } from "react";
+import invitations from "../models/invitations.ts";
+import { baseURL } from "../utils/utils.ts";
 
 interface EmailMenuFormProps {
     emails: string[];
+    id: string;
+    title: string;
 }
 
-export default function EmailMenuForm({ emails }: EmailMenuFormProps) {
+export default function EmailMenuForm({ emails, id, title }: EmailMenuFormProps) {
     const [selectedEmail, setSelectedEmail] = useState("");
+    const [errorMessage, setErrorMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const submitHandling = (event: React.FormEvent<HTMLFormElement>) => {
+    const submitHandling = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("Selected user email:", selectedEmail);
+        if (!selectedEmail.trim() || !id || loading) return;
+        setLoading(true);
+
+        try {
+            const inputs = { email: selectedEmail, url: baseURL, id: id, name: title };
+            const sendResult = await invitations.send(inputs);
+            alert(sendResult);
+            setErrorMessage('');
+            console.log(sendResult);
+        } catch (error) {
+            console.log(error);
+            setErrorMessage("Failed to send invitation mail...");
+            alert(errorMessage);
+        } finally {
+            setLoading(false);
+        }
 
     };
 
@@ -30,7 +51,7 @@ export default function EmailMenuForm({ emails }: EmailMenuFormProps) {
                 ))}
             </select>
 
-            <button type="submit">Add as Editor</button>
+            <button type="submit" className="submit-button">Add as Editor</button>
         </form>
     );
 }
