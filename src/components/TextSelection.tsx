@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 
-export default function TextSelection( { socket, currentDoc }: any) {
+export default function TextSelection( { socket, currentDoc, comments }: any) {
     const [selectedText, setSelectedText] = useState("")
     const [comment, setComment] = useState("")
+    // const [recieveComment, setRecieveComment] = useState([]);
 
     function handleSelection() {
         const selection = window.getSelection()?.toString();
@@ -20,6 +21,7 @@ export default function TextSelection( { socket, currentDoc }: any) {
             document.removeEventListener("mouseup", handleSelection);
             }
     }, []);
+
 
     function extractUser() {
         const token = localStorage.getItem("token")
@@ -43,12 +45,13 @@ export default function TextSelection( { socket, currentDoc }: any) {
 
         const oneComment = {
             user: extractUser(),
-            docId: currentDoc.id,
+            _id: currentDoc.id,
             text: selectedText,
             commentTxt: comment
         }
 
         console.log("Fully built socket emit object from user:", oneComment)
+        socket.emit("comment", oneComment);
 
         setComment("");
     }
@@ -59,15 +62,29 @@ export default function TextSelection( { socket, currentDoc }: any) {
         console.log("The input from comment:", value)
     }
 
+    function renderComment(comment) {
+        return (
+        <div>
+            <p>{comment.user} on : {comment.text}</p>
+            <p>- {comment.commentTxt}</p>
+        </div>
+        );
+    }
+
     return (
         <div className="comments-container">
             <div className="marked-text">
-                <textarea className="comments-textarea"
+                <textarea
+                    className="comments-textarea"
                     value={comment}
                     onChange={handleCommentChange}
-                    ></textarea>
+                ></textarea>
                 <button onClick={handleCommentPost}>Comment</button>
             </div>
-        </div>
-    );
-}
+
+            <div className="list-comments">
+            {comments?.map(renderComment)}
+            </div>
+        </div> 
+    )
+};
