@@ -17,6 +17,10 @@ export default function LoginForm() {
 
         const loginResult = await auth.login({ email, password });
         if (loginResult?.data?.type === 'success') {
+            const token = loginResult.data.token;
+            if (token) {
+                localStorage.setItem("token", token);
+        }
             navigate("/");
         }
         if (loginResult?.errors?.[0]?.status === 401) {
