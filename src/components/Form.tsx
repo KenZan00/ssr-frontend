@@ -157,7 +157,7 @@ export default function AppForm({ currentDoc, }: {
             {emailMenuVisible && <EmailMenuForm emails={availableUserEmails} />}
 
         <div className="comments-box">
-            <TextSelection />
+            <TextSelection socket={socket.current} currentDoc={currentDoc} />
         </div>
             
         </div>
