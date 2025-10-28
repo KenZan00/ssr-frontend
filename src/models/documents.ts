@@ -83,6 +83,22 @@ const documents = {
         console.log("Result of postDocument:", result);
         return result.data;
     },
+    addUserAsEditor: async function addUserAsEditor(data: 
+        { id: string; token: string }) {
+        const token = localStorage.getItem("token");
+        const id = data.id;
+        const tokenQuery = data.token;
+        const response = await fetch(`${baseURL}/documents/${id}/editor?token=${tokenQuery}`, {
+            method: 'GET',
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        const result = await response.json();
+        console.log("Result of addUserAsEditor:", result);
+        return result.data;
+    },
 
 }
 
