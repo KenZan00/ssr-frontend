@@ -11,7 +11,7 @@ export default function AppForm({ currentDoc, }: {
     currentDoc?: { id: string; title: string; content: string }
 }) {
     const [emailMenuVisible, setEmailMenuVisible] = useState(false);
-    const [availableUserEmails, setAvailableUserEmails] = useState(['test']);
+    const [availableUserEmails, setAvailableUserEmails] = useState(['']);
     const navigate = useNavigate();
 
     //Socket states
