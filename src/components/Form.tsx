@@ -1,9 +1,11 @@
 import type React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 import documents from "../models/documents.ts";
 import EmailMenuForm from "./EmailMenuForm.tsx"
-import { io } from "socket.io-client";
+import TextSelection from "./TextSelection.tsx";
+
 
 const SERVER_URL = "http://localhost:3000";
 
@@ -18,6 +20,7 @@ export default function AppForm({ currentDoc, }: {
     //Socket states
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [recieveComment, setRecieveComment] = useState([]);
 
     const socket = useRef(null);
 
@@ -33,6 +36,12 @@ export default function AppForm({ currentDoc, }: {
             setTitle(data.title);
             setContent(data.content)
         });
+
+        socket.current.on('comment', (data: any) => {
+            console.log("DATA FRÅN SOCKET COMMENT::::!!!!", data)
+            // const prev = [...prev, data];
+            setRecieveComment(prev => [...prev, data]);
+        })
 
         return () => {
             socket.current.disconnect();
@@ -155,6 +164,14 @@ export default function AppForm({ currentDoc, }: {
 
             {emailMenuVisible && <EmailMenuForm emails={availableUserEmails} 
             id={currentDoc?.id || ''} title={title} />}
+
+            {socket.current && (
+                <div className="comments-box">
+                <TextSelection socket={socket.current} currentDoc={currentDoc} comments={recieveComment} />
+                </div>
+            )}
+
+            
         </div>
 
 
