@@ -5,6 +5,7 @@ import { io } from "socket.io-client";
 import documents from "../models/documents.ts";
 import EmailMenuForm from "./EmailMenuForm.tsx"
 import TextSelection from "./TextSelection.tsx";
+import { extractUser } from "../utils/email.ts";
 
 
 const SERVER_URL = "http://localhost:3000";
@@ -15,7 +16,7 @@ export default function AppForm({ currentDoc, }: {
     const [emailMenuVisible, setEmailMenuVisible] = useState(false);
     const [availableUserEmails, setAvailableUserEmails] = useState(['']);
     const navigate = useNavigate();
-
+    const [currentUserEmail] = useState(extractUser);
 
     //Socket states
     const [title, setTitle] = useState("");
@@ -60,22 +61,28 @@ export default function AppForm({ currentDoc, }: {
         //Set content due rooms broadcat on server and not emits to all.
         setContent(value)
 
-        socket.current.emit("doc", {
-            _id: currentDoc.id || "",
-            title,
-            content: value
-        });
+        if (currentDoc?.id ) {
+            socket.current.emit("doc", {
+                _id: currentDoc.id || "",
+                title,
+                content: value,
+                user: currentUserEmail
+            });
+        }
     }
 
     function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const value = e.target.value;
         setTitle(value);
 
-        socket.current.emit("doc", {
-            _id: currentDoc.id || "",
-            title: value,
-            content
-        });
+        if (currentDoc?.id) {
+            socket.current.emit("doc", {
+                _id: currentDoc.id || "",
+                title: value,
+                content,
+                user: currentUserEmail
+            });
+        }
     }
 
     const submitHandling = async (event: React.FormEvent<HTMLFormElement>) => {

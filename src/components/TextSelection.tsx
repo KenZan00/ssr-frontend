@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { extractUser } from "../utils/email.ts";
 
 export default function TextSelection( { socket, currentDoc, comments }: any) {
     const [selectedText, setSelectedText] = useState("")
@@ -21,24 +22,6 @@ export default function TextSelection( { socket, currentDoc, comments }: any) {
             document.removeEventListener("mouseup", handleSelection);
             }
     }, []);
-
-
-    function extractUser() {
-        const token = localStorage.getItem("token")
-
-        let username=""
-
-        if (!token) {
-            username = "incognito"
-            return username
-            } else {
-                const tokenDecoded = JSON.parse(atob(token.split(".")[1]));
-                const user = tokenDecoded.email;
-                console.log("Decoded token", tokenDecoded)
-                console.log("User", user)
-                return user
-            }
-        }
 
     function handleCommentPost() {
         console.log("Comment while pushing comment button:", comment)
