@@ -51,8 +51,7 @@ export default function AppForm({ currentDoc, }: {
         });
 
         socket.current.on('comment', (data: CommentIntf) => {
-            console.log("DATA FRÅN SOCKET COMMENT::::!!!!", data)
-            // const prev = [...prev, data];
+            // console.log("DATA från socket Comment", data)
             setRecieveComment(prev => [...prev, data]);
         })
 
@@ -70,7 +69,7 @@ export default function AppForm({ currentDoc, }: {
 
     function handleContentChange(e) {
         const value = e.target.value;
-        //Set content due rooms broadcat on server and not emits to all.
+        //Set content due rooms broadcast on server and not emits to all.
         setContent(value)
 
         if (currentDoc?.id ) {
