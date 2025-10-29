@@ -15,12 +15,12 @@ export default function AppRouter() {
         <Route path="/" element={<DocumentsListView />} />
         <Route path="/newdoc" element={<AppFormView />} />
         <Route path="/:id" element={<AppFormView />} />
+        <Route path="/code" element={<CodeModeView />} />
+        <Route path="/code/:id" element={<CodeModeView />} />
       </Route>
       <Route path="/login" element={<LoginFormView />} />
       <Route path="/signup" element={<SignupFormView />} />
       <Route path="/logout" element={<LogoutView />} />
-      <Route path="/code" element={<CodeModeView />} />
-      <Route path="/code/:id" element={<CodeModeView />} />
     </Routes>
   );
 }
