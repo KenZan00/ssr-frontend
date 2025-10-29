@@ -67,7 +67,7 @@ export default function AppForm({ currentDoc, }: {
 
     }, [currentDoc?.id, currentDoc?.title, currentDoc?.content]);
 
-    function handleContentChange(e) {
+    function handleContentChange(e: React.ChangeEvent<HTMLInputElement>) {
         const value = e.target.value;
         //Set content due rooms broadcast on server and not emits to all.
         setContent(value)
