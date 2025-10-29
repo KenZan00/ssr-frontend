@@ -26,8 +26,8 @@ export default function CodeMode({ currentDoc, }: {
             }
 
             socket.current.on('code', (data) => {
-                // setTitle(data.title);
-                setEditorContent(data.editorContent)
+                setTitle(data.title);
+                setEditorContent(data.content)
             });
 
             return () => {
@@ -44,7 +44,7 @@ export default function CodeMode({ currentDoc, }: {
                 socket.current.emit("code", {
                     _id: currentDoc?.id || "",
                     title,
-                    editorContent: value,
+                    content: value,
                     user: currentUserEmail
                 });
             }
@@ -53,6 +53,15 @@ export default function CodeMode({ currentDoc, }: {
         function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>) {
             const value = e.target.value;
             setTitle(value);
+
+            if (currentDoc?.id) {
+                socket.current.emit("code", {
+                    _id: currentDoc?.id || "",
+                    title: value,
+                    content: editorContent,
+                    user: currentUserEmail
+                });
+            }
         }
 
         async function runCode() {
