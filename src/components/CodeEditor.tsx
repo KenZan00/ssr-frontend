@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import Editor from "@monaco-editor/react";
 import documents from "../models/documents.ts";
 import executeJs from "../models/execjs.ts";
+import { extractUser } from "../utils/email.ts";
 
 const SERVER_URL = "http://localhost:3000";
 
@@ -10,6 +11,7 @@ export default function CodeMode({ currentDoc, }: {
     currentDoc?: {id: string; title: string; content: string}
     }) {
 
+        const [currentUserEmail] = useState(extractUser);
         const [title, setTitle] = useState(currentDoc?.title || "");
         const [editorContent, setEditorContent] = useState(currentDoc?.content || '')
         const [codeOutput, setCodeOutput] = useState('Here comes the output from code runs')
@@ -38,11 +40,14 @@ export default function CodeMode({ currentDoc, }: {
             const value = content ?? "";
             setEditorContent(value);
 
-            socket.current.emit("code", {
-                _id: currentDoc?.id || "",
-                title,
-                editorContent: value
-            });
+            if (currentDoc?.id) {
+                socket.current.emit("code", {
+                    _id: currentDoc?.id || "",
+                    title,
+                    editorContent: value,
+                    user: currentUserEmail
+                });
+            }
         }
         
         function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>) {
