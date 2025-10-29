@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import Editor from "@monaco-editor/react";
 import documents from "../models/documents.ts";
 import executeJs from "../models/execjs.ts";
@@ -16,7 +16,7 @@ export default function CodeMode({ currentDoc, }: {
         const [editorContent, setEditorContent] = useState(currentDoc?.content || '')
         const [codeOutput, setCodeOutput] = useState('Here comes the output from code runs')
 
-        const socket = useRef(null);
+        const socket = useRef<Socket | null>(null);
 
         useEffect(() => {
             socket.current = io(SERVER_URL);
@@ -26,12 +26,12 @@ export default function CodeMode({ currentDoc, }: {
             }
 
             socket.current.on('code', (data) => {
-                // setTitle(data.title);
-                setEditorContent(data.editorContent)
+                setTitle(data.title);
+                setEditorContent(data.content)
             });
 
             return () => {
-                socket.current.disconnect();
+                socket.current?.disconnect();
             }
         }, [currentDoc?.id]);
 
@@ -41,10 +41,10 @@ export default function CodeMode({ currentDoc, }: {
             setEditorContent(value);
 
             if (currentDoc?.id) {
-                socket.current.emit("code", {
+                socket.current?.emit("code", {
                     _id: currentDoc?.id || "",
                     title,
-                    editorContent: value,
+                    content: value,
                     user: currentUserEmail
                 });
             }
@@ -53,6 +53,15 @@ export default function CodeMode({ currentDoc, }: {
         function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>) {
             const value = e.target.value;
             setTitle(value);
+
+            if (currentDoc?.id) {
+                socket.current?.emit("code", {
+                    _id: currentDoc?.id || "",
+                    title: value,
+                    content: editorContent,
+                    user: currentUserEmail
+                });
+            }
         }
 
         async function runCode() {

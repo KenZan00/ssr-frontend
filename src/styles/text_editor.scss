@@ -1,0 +1,20 @@
+.content-editor {
+    height: 500px;
+    line-height: 1.6rem;
+}
+
+.text-editor-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+input:focus,
+textarea:focus,
+button:focus,
+select:focus,
+a:focus {
+    outline: 2px solid #929DD785;
+    outline-offset: 1px;
+}

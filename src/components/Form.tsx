@@ -1,7 +1,7 @@
 import type React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import documents from "../models/documents.ts";
 import EmailMenuForm from "./EmailMenuForm.tsx"
 import TextSelection from "./TextSelection.tsx";
@@ -21,9 +21,21 @@ export default function AppForm({ currentDoc, }: {
     //Socket states
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [recieveComment, setRecieveComment] = useState([]);
+    const [recieveComment, setRecieveComment] = useState<CommentIntf[]>([]);
 
-    const socket = useRef(null);
+    const socket = useRef<Socket | null>(null);
+
+    interface DocumentIntf {
+        title: string;
+        content: string;
+    };
+
+    interface CommentIntf {
+        _id: string;
+        text: string;
+        user: string;
+        commentTxt: string;
+    }
 
     //Useeffect handling socket creation and data handling
     useEffect(() => {
@@ -33,19 +45,18 @@ export default function AppForm({ currentDoc, }: {
             socket.current.emit('create', currentDoc.id)
         }
 
-        socket.current.on('doc', (data) => {
+        socket.current.on('doc', (data: DocumentIntf) => {
             setTitle(data.title);
             setContent(data.content)
         });
 
-        socket.current.on('comment', (data: any) => {
-            console.log("DATA FRÅN SOCKET COMMENT::::!!!!", data)
-            // const prev = [...prev, data];
+        socket.current.on('comment', (data: CommentIntf) => {
+            // console.log("DATA från socket Comment", data)
             setRecieveComment(prev => [...prev, data]);
         })
 
         return () => {
-            socket.current.disconnect();
+            socket.current?.disconnect();
         }
     }, [currentDoc?.id]);
 
@@ -56,13 +67,13 @@ export default function AppForm({ currentDoc, }: {
 
     }, [currentDoc?.id, currentDoc?.title, currentDoc?.content]);
 
-    function handleContentChange(e) {
+    function handleContentChange(e: React.ChangeEvent<HTMLInputElement>) {
         const value = e.target.value;
-        //Set content due rooms broadcat on server and not emits to all.
+        //Set content due rooms broadcast on server and not emits to all.
         setContent(value)
 
         if (currentDoc?.id ) {
-            socket.current.emit("doc", {
+            socket.current?.emit("doc", {
                 _id: currentDoc.id || "",
                 title,
                 content: value,
@@ -76,7 +87,7 @@ export default function AppForm({ currentDoc, }: {
         setTitle(value);
 
         if (currentDoc?.id) {
-            socket.current.emit("doc", {
+            socket.current?.emit("doc", {
                 _id: currentDoc.id || "",
                 title: value,
                 content,

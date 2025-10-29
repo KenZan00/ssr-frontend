@@ -2,9 +2,13 @@
 @use './styles/base/base';
 @use './styles/base/typography';
 @use './styles/base/inputs';
+@use './styles/base/buttons';
 @use './styles/components/EmailMenuForm';
 
 @use './styles/code_editor.scss';
+@use './styles/text_editor.scss';
+@use './styles/comments';
+@use './styles/documents';
 
 @import 'normalize.css';
 @import './styles/base/fonts';

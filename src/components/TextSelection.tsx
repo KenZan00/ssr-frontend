@@ -48,8 +48,8 @@ export default function TextSelection( { socket, currentDoc, comments }: any) {
     function renderComment(comment, index) {
         return (
         <div key={index}>
-            <p>{comment.user} on : {comment.text}</p>
-            <p>- {comment.commentTxt}</p>
+            <p className="username-comment">{comment.user} on: <span className="comment-quote">"{comment.text}"</span></p>
+            <p className="comment-text">- {comment.commentTxt}</p>
         </div>
         );
     }
