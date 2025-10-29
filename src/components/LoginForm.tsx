@@ -44,7 +44,7 @@ export default function LoginForm() {
             <label htmlFor="password">Lösenord: </label>
             <textarea id="password" name="password" placeholder="Skriv ditt lösenord" defaultValue="" />
 
-            <button type="submit" name="action" value="login">Logga in</button>
+            <button className="blue-button" type="submit" name="action" value="login">Logga in</button>
         </form>
     )
 };

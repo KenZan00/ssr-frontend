@@ -143,6 +143,7 @@ export default function AppForm({ currentDoc, }: {
 
     return (
         <div>
+            <div className="text-editor-wrapper">
             <form onSubmit={submitHandling} className="new-doc">
                 <label htmlFor="title">Titel: </label>
                 <input 
@@ -156,6 +157,7 @@ export default function AppForm({ currentDoc, }: {
 
                 <label htmlFor="content">Innehåll: </label>
                 <textarea
+                    className="content-editor"
                     id="content"
                     name="content"
                     placeholder="Content goes here"
@@ -163,20 +165,21 @@ export default function AppForm({ currentDoc, }: {
                     onChange={handleContentChange}
                 />
 
-                <button type="submit" name="action" value="Lägg till">Lägg till</button>
-                <button type="submit" name="action" value="Uppdatera">Uppdatera</button>
-                <button type="submit" name="action" value="Dela">Dela</button>
-                <input type="hidden" name="id" value={currentDoc?.id || ""} />
+                <button className="blue-button" type="submit" name="action" value="Lägg till">Lägg till</button>
+                <button className="blue-button" type="submit" name="action" value="Uppdatera">Uppdatera</button>
+                <button className="blue-button" type="submit" name="action" value="Dela">Dela</button>
+                <input className="blue-button" type="hidden" name="id" value={currentDoc?.id || ""} />
             </form>
-
-            {emailMenuVisible && <EmailMenuForm emails={availableUserEmails} 
-            id={currentDoc?.id || ''} title={title} />}
 
             {socket.current && (
                 <div className="comments-box">
+                <label>Comments: </label>
                 <TextSelection socket={socket.current} currentDoc={currentDoc} comments={recieveComment} />
                 </div>
             )}
+        </div>
+            {emailMenuVisible && <EmailMenuForm emails={availableUserEmails} 
+            id={currentDoc?.id || ''} title={title} />}
 
             
         </div>

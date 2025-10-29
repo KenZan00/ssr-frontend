@@ -14,6 +14,7 @@ html {
 }
 
 body {
+    background-color: #FFFAFA;
     line-height: 1.4;
     font-family: "Noto Sans", sans-serif;
     font-optical-sizing: auto;
@@ -22,12 +23,29 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    color: #141414;
 }
 
 header {
-    background-color: #0074D9;
-    color: #fff;
+    background-color: #FFFAFA;
+    color: #141414;
     padding: 1.4rem 3rem;
+}
+
+.header-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid #141414;
+    width: 80%;
+    padding: 1rem;
+    margin: 0 auto;;
+}
+
+.logo {
+    height: 180px;
+    margin-right: 1rem;
 }
 
 main {
@@ -37,11 +55,114 @@ main {
     flex: 1 0 auto;
 }
 
+a.sign-up {
+    text-decoration: none;
+    display: inline-block;
+    padding: 1rem 2rem;
+    color: #4453A4;
+    border: 2px solid #4453A4;
+    border-radius: 12px;
+    transition: background 0.6s, color 0.3s;
+}
+
+a.sign-up:visited {
+    color: #4453A4;
+}
+
+a.sign-up:hover {
+    // color: #FFFAFA;
+    background-color: #929DD785;
+    color: #141414;
+}
+
+.blue-button {
+    background: none;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    color: #4453A4;
+    border: 2px solid #4453A4;
+    border-radius: 12px;
+    transition: background 0.6s, color 0.3s;
+
+    // font-size: 1.6rem;
+    box-shadow: none;
+    font-weight: 600;
+}
+
+.blue-button:hover {
+    // color: #FFFAFA;
+    background-color: #929DD785;
+    color: #141414;
+}
+
+.logout {
+    position: absolute;
+    right: 5rem;
+}
+
+.documentsList {
+    margin: 1rem 1rem 0 0;
+}
+
+.documentsList a {
+    color: #141414;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    transition: background 0.5s ease-in-out;
+}
+
+.documentsList a:hover {
+    background-color: #C588D4;
+}
+
+.new-doc-links {
+    display: flex;
+    gap: 2rem;
+    padding-bottom: 1rem;
+}
+
+.new-doc {
+    flex: 4;
+}
+
+.comments-box {
+    flex: 1;
+}
+
+.content-editor {
+    height: 500px;
+    line-height: 1.6rem;
+}
+
+.text-editor-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+input:focus,
+textarea:focus,
+button:focus,
+select:focus,
+a:focus {
+    outline: 2px solid #929DD785;
+    outline-offset: 1px;
+}
+
 footer {
-    background-color: #333;
-    color: #fff;
+    background-color: #FFFAFA;
+    color: #141414;
     padding: 1.4rem 8rem;
     flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 2px solid #141414;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .layout-container {

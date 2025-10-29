@@ -92,30 +92,31 @@ export default function CodeMode({ currentDoc, }: {
             />       
         
         <div>
-            <button onClick={runCode}>Run Code</button>
+            <button className="blue-button" onClick={runCode}>Run Code</button>
         </div>
-
-        <div className="monaco-container">
-            <div className="monaco-editor-box">
-                <Editor
-                className="code-editor"
-                height="75vh"
-                width="100%"
-                theme="vs-dark"
-                defaultLanguage="javascript"
-                defaultValue="// some comment"
-                value={editorContent}
-                onChange={handleEditorChange}
-                options={{
-                    fontSize: 20,
-                }}
-                />
+        <div className="code-editor-container">
+            <div className="monaco-container">
+                <div className="monaco-editor-box">
+                    <Editor
+                    className="code-editor"
+                    height="75vh"
+                    width="100%"
+                    theme="vs-dark"
+                    defaultLanguage="javascript"
+                    defaultValue="// some comment"
+                    value={editorContent}
+                    onChange={handleEditorChange}
+                    options={{
+                        fontSize: 20,
+                    }}
+                    />
+                </div>
+                <div className="monaco-output-box">
+                    <pre>{codeOutput}</pre>
+                </div>
             </div>
-            <div className="monaco-output-box">
-                <pre>{codeOutput}</pre>
-            </div>
-            <button onClick={saveCode}>Lägg till</button>
         </div>
+        <button className="blue-button" onClick={saveCode}>Lägg till</button>
         </>
     )
 }
