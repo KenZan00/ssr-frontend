@@ -16,15 +16,16 @@ export default function LoginForm() {
         // const action = submitter?.value as string;
 
         const loginResult = await auth.login({ email, password });
-        if (loginResult?.data?.type === 'success') {
+        if (loginResult?.errors?.[0]?.status === 401) {
+            alert(loginResult.errors[0].detail);
+        }
+        if (loginResult) {
             const token = loginResult.data.token;
             if (token) {
                 localStorage.setItem("token", token);
-        }
+                console.log('token set')
+            }
             navigate("/");
-        }
-        if (loginResult?.errors?.[0]?.status === 401) {
-            alert(loginResult.errors[0].detail);
         }
     }
 
