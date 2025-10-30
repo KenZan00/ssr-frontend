@@ -12,8 +12,8 @@ export default function DocumentsList() {
             try {
                 const allDocs = await documents.getAllDocuments();
                 setDocs(allDocs);
-            } catch (err) {
-                console.error("Failed to load documents", err);
+            } catch (error) {
+                console.error("Failed to load documents", error);
             }
         };
 
