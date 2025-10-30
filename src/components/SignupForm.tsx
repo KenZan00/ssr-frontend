@@ -17,11 +17,11 @@ export default function SignupForm() {
         try {
             const signupResult = await auth.signup({ email, password });
             console.log("Signup complete:", signupResult);
-            if (signupResult?.data?.type === 'success') {
-                navigate("/");
-            }
             if (signupResult?.errors?.[0]?.status === 401) {
                 alert(signupResult.errors[0].detail);
+            }
+            if (signupResult) {
+                navigate("/");
             }
         } catch (error) {
             console.log("Failed to signup:", error);
