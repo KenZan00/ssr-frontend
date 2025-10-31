@@ -1,0 +1,37 @@
+.code-editor-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+}
+
+.code-editor-container {
+    flex: 1;
+    // height: 90vh;
+    width: 100%;
+    border: 2px solid grey;
+    border-radius: 5px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.monaco-container {
+    display: flex;
+}
+
+.monaco-editor-box {
+    flex: 1;
+}
+
+.monaco-output-box {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    // text-align: center;
+}
+
+.monaco-output-box pre {
+    width: 100%;
+    text-align: center;
+}
