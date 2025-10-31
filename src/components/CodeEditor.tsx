@@ -4,8 +4,9 @@ import Editor from "@monaco-editor/react";
 import documents from "../models/documents.ts";
 import executeJs from "../models/execjs.ts";
 import { extractUser } from "../utils/email.ts";
+import { baseURL } from "../utils/utils.ts";
 
-const SERVER_URL = "http://localhost:3000";
+const SERVER_URL = baseURL;
 
 export default function CodeMode({ currentDoc, }: {
     currentDoc?: {id: string; title: string; content: string}
