@@ -67,7 +67,7 @@ export default function AppForm({ currentDoc, }: {
 
     }, [currentDoc?.id, currentDoc?.title, currentDoc?.content]);
 
-    function handleContentChange(e: React.ChangeEvent<HTMLInputElement>) {
+    function handleContentChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
         const value = e.target.value;
         //Set content due rooms broadcast on server and not emits to all.
         setContent(value)
@@ -182,11 +182,11 @@ export default function AppForm({ currentDoc, }: {
                 <input className="blue-button" type="hidden" name="id" value={currentDoc?.id || ""} />
             </form>
 
-            {socket.current && (
-                <div className="comments-box">
-                <label>Comments: </label>
-                <TextSelection socket={socket.current} currentDoc={currentDoc} comments={recieveComment} />
-                </div>
+            {socket.current && (<div className="comments-box"><label>Comments: </label>
+                {socket.current && currentDoc && (
+                <TextSelection socket={socket.current} currentDoc={currentDoc} comments={recieveComment as any} />
+                )}                
+            </div>
             )}
         </div>
             {emailMenuVisible && <EmailMenuForm emails={availableUserEmails} 
