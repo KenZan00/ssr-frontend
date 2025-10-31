@@ -1,10 +1,27 @@
 import { useState, useEffect } from "react";
 import { extractUser } from "../utils/email.ts";
+import type { Socket } from "socket.io-client";
 
-export default function TextSelection( { socket, currentDoc, comments }: any) {
+
+interface TextSelectIntf {
+    socket: Socket;
+    currentDoc: {
+        id: string;
+        title: string;
+        content: string;
+    };
+    
+    comments: Array <{
+        id: string;
+        text: string;
+        commentTxt: string;
+        user: string;
+    }>;
+}
+
+export default function TextSelection( { socket, currentDoc, comments }: TextSelectIntf) {
     const [selectedText, setSelectedText] = useState("")
     const [comment, setComment] = useState("")
-    // const [recieveComment, setRecieveComment] = useState([]);
 
     function handleSelection() {
         const selection = window.getSelection()?.toString();
