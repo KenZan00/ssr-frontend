@@ -6,9 +6,10 @@ import documents from "../models/documents.ts";
 import EmailMenuForm from "./EmailMenuForm.tsx"
 import TextSelection from "./TextSelection.tsx";
 import { extractUser } from "../utils/email.ts";
+import { baseURL } from "../utils/utils.ts";
 
 
-const SERVER_URL = "http://localhost:3000";
+const SERVER_URL = baseURL;
 
 export default function AppForm({ currentDoc, }: {
     currentDoc?: { id: string; title: string; content: string }
