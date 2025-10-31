@@ -184,6 +184,7 @@ export default function AppForm({ currentDoc, }: {
 
             {socket.current && (<div className="comments-box"><label>Comments: </label>
                 {socket.current && currentDoc && (
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 <TextSelection socket={socket.current} currentDoc={currentDoc} comments={recieveComment as any} />
                 )}                
             </div>
